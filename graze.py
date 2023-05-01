@@ -67,6 +67,7 @@ def forward_examples(examples, model_name_or_path, dtype):
     )
     for key, val in outputs.items():
         if type(val) is tuple:
+            # pyarrow uses 32 bit indices so numpy arrays need <2**32 elements
             outputs[key] = [#torch.stack(val, dim=1).numpy()
                 [
                     layer[batch_idx].numpy()
